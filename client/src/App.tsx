@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import axios from "axios";
 
@@ -22,42 +22,40 @@ const useScript = (url: string) => {
 };
 
 const App = () => {
+  const [error, setError] = useState<string>("");
   const isSuccess = window.location.search.includes("success=true");
   const isError = window.location.search.includes("error=true");
 
   useScript("https://cdn.getivy.de/button.js");
 
   const createCheckout = async () => {
-    await axios
-      .post(`${BASE_URL}/checkout/create`, {
+    try {
+      const res = await axios.post(`${BASE_URL}/checkout/create`, {
         price: {
-          totalNet: 100,
-          vat: 19,
-          total: 119,
+          total: 16,
           currency: "EUR",
         },
-      })
-      .then((res) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        startIvyCheckout(res.data.ivyCheckoutUrl);
       });
+
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      startIvyCheckout(res.data.ivyCheckoutUrl);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || err.message || "Failed to get checkout URL");
+      } else {
+        setError("An unexpected error occurred");
+      }
+    }
   };
 
   return (
     <div>
       {isSuccess && <p>Your previous payment was successful!</p>}
       {isError && <p>Your previous payment failed!</p>}
-      <h2>Checkout</h2>
-      <p>List of other payment methods...</p>
-      <button
-        className="ivy-checkout-button"
-        data-cart-value="399.99"
-        data-currency-code="EUR"
-        data-locale="en"
-        data-mode="cashback"
-        onClick={createCheckout}
-      ></button>
+      <p>Click below to start the payment process</p>
+      <button className="ivy-checkout-button" onClick={createCheckout}></button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 };

@@ -54,7 +54,15 @@ app.post("/checkout/create", async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Failed to create Ivy checkout session");
+    if (axios.isAxiosError(error)) {
+      res.status(error.response?.status || 500).json({
+        message: error.response?.data?.message || error.message,
+      });
+    } else {
+      res
+        .status(500)
+        .json({ message: "Failed to create Ivy checkout session" });
+    }
   }
 });
 

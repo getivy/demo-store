@@ -1,56 +1,37 @@
-# Ivy Docs Sample Shop
+# Demo Store
 
 ## Description
 
 This project is a full-stack application that includes a client and a server. The client is built with Vite and the server is built with Express.js.
-The application allows users to play around and see how you can setup the Ivy API.
+The application allows you to play around and see how you can setup the Ivy API.
 
-## Installation
+## Setup
 
-To install the dependencies for this project, navigate to both the `client` and `server` directories in your terminal and run:
+To install the dependencies for this project, run:
 
 ```bash
-yarn
+npm install
 ```
 
-## Running the Application
+## Run with Docker
 
-To start the `client`, navigate to the client directory in your terminal and run:
+### Create .env file
 
-```bash
-yarn dev
-```
-
-To start the `server`, navigate to the server directory in your terminal and run:
+To create the .env file, run the following command:
 
 ```bash
-yarn start
-```
-
-### Docker
-
-This project includes a `docker-compose.yml` file that allows you to run the `client` and `server` in Docker containers. To start the containers, run:
-
-```bash
-docker-compose up
-```
-
-## Environment Variables
-
-This project uses the following environment variables:
-
-`IVY_API_URL`: The URL of the Ivy API. <br>
-`PORT`: The port the server should run on. <br>
-`IVY_API_KEY`: The API key for the Ivy API.
-
-Copy the .env.example file to .env, then fill out IVY_API_KEY in .env
-
-```bash
+cd server
 cp .env.example .env
 ```
 
-Make sure to have a merchant correctly created to obtain your environment vars. [Contact us](mailto:developer@getivy.io?subject=Merchant%20Dashboard%20Access) if needed.
+### Up!
+
+Now, run the following command to start the containers:
+
+```bash
+docker compose up
+```
 
 ## Docs
 
-For more information, see our Docs at https://docs.getivy.de/
+For more information, check out our [Docs](https://docs.getivy.de/)

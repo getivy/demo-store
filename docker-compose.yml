@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   client:
-    container_name: ivy-client-sample
+    container_name: demo-store-client
     build:
       context: ./client
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./client/src:/app/src
   server:
-    container_name: ivy-server-sample
+    container_name: demo-store-server
     build:
       context: ./server
       dockerfile: Dockerfile
